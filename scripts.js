@@ -2,6 +2,8 @@ const startBtn = document.getElementById('startBtn');
 const stopBtn  = document.getElementById('stopBtn');
 const statusEl = document.getElementById('status');
 const linksBox = document.getElementById('linksBox');
+const destUrlInput = document.getElementById('destUrl');
+const workerCountInput = document.getElementById('workerCount');
 
 let running = false;
 let workers = [];
@@ -15,6 +17,16 @@ function getLinks() {
     .split('\n')
     .map(s => s.trim())
     .filter(Boolean);
+}
+
+function getDestUrl() {
+  const val = destUrlInput.value.trim();
+  return val || "https://9mcasino.com/"; // 預設 google
+}
+
+function getWorkerCount() {
+  const n = parseInt(workerCountInput.value, 10);
+  return (isNaN(n) || n < 1) ? 1 : n; // 預設至少 1
 }
 
 function pickRandomIndex(len, avoid = -1) {
@@ -45,15 +57,17 @@ async function processOneLink(url, workerId) {
 
   try { win.location.href = url; } catch {}
 
-  const wait1 = randInt(40, 65);
-  log(`#${workerId} 等待 ${wait1}s 後跳轉到 google.com`);
+  const wait1 = randInt(30, 60);
+  log(`#${workerId} 等待 ${wait1}s 後跳轉到目的地`);
   await sleep(wait1 * 1000);
 
   if (!running || win.closed) return;
-  try { win.location.href = 'https://9mcasino.com/'; } catch {}
+  const destUrl = getDestUrl();
+  try { win.location.href = destUrl; }
+  catch (e) { log(`#${workerId} 無法導向目的地`); }
 
   const wait2 = randInt(60, 100);
-  log(`#${workerId} 已跳轉到 google，等待 ${wait2}s 後關閉`);
+  log(`#${workerId} 已跳轉，等待 ${wait2}s 後關閉`);
   await sleep(wait2 * 1000);
 
   if (!running || win.closed) return;
@@ -95,18 +109,22 @@ function toggleButtons() {
   stopBtn.disabled = !running;
 }
 
-startBtn.addEventListener('click', () => {
+startBtn.addEventListener('click', async () => {
   if (running) return;
   statusEl.textContent = '執行中…';
   running = true;
   toggleButtons();
 
-  const workerCount = 5; // 🔥 同時要跑幾個流程（可調整）
+  const waitWorker = randInt(1, 2);
+  const workerCount = getWorkerCount(); // 讀取使用者輸入
+
   workers = [];
   lastIndexes = new Array(workerCount).fill(-1);
-
+  
   for (let i = 0; i < workerCount; i++) {
     workers.push(workerLoop(i + 1));
+    await sleep(waitWorker * 1000);
+
   }
 });
 
