@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>隨機開啟連結並自動跳轉/關閉</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", sans-serif; padding: 24px; }
+    button { padding: 10px 16px; margin-right: 8px; cursor: pointer; }
+    #status { margin-top: 12px; white-space: pre-line; }
+    textarea { width: 100%; height: 140px; }
+    small { color: #666; }
+  </style>
+</head>
+<body>
+  <h1>隨機開啟連結 → 等待 → 跳轉 Google → 等待 → 關閉</h1>
+
+  <p>把你的 10 個網址（或更多）每行一個貼在下方：</p>
+  <textarea id="linksBox">https://www.9m6868.com/2025/08/9m_27.html
+https://www.9m6868.com/2025/08/20259m.html
+https://www.9m6868.com/2025/08/9m9m_11.html
+https://www.9m6868.com/2025/08/9m_91.html
+https://www.9m6868.com/2025/08/9m-vs-vs-i88.html
+https://www.9m6868.com/2025/08/9m_91.html
+https://www.9m6868.com/2025/08/9m9m_25.html
+https://www.9m6868.com/2025/08/9m119m.html
+https://www.9m6868.com/2025/08/9m109m.html
+https://www.9m6868.com/2025/08/9m49m.html
+https://www.9m6868.com/2025/08/9m59m.html
+https://www.9m6868.com/2025/08/9m69m.html
+https://www.9m6868.com/2025/08/9m79m.html
+https://www.9m6868.com/2025/08/9m89m.html
+https://www.9m6868.com/2025/08/9m99m.html
+https://www.9m6868.com/2025/08/9m39m.html
+https://www.9m6868.com/2025/08/9m2tz.html
+https://www.9m6868.com/2025/08/9m19m.html
+</textarea>
+
+  <div style="margin:12px 0">
+    <button id="startBtn">開始</button>
+    <button id="stopBtn" disabled>停止</button>
+  </div>
+
+  <div id="status">尚未開始</div>
+  <p><small>提示：若出現彈窗被阻擋，請允許本站的彈出式視窗，再按一次「開始」。</small></p>
+
+  <!-- 外部腳本 -->
+  <script src="scripts.js"></script>
+</body>
+</html>
