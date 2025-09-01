@@ -2,57 +2,55 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>隨機開啟連結並自動跳轉/關閉</title>
+  <title>從試算表抓 E/F 欄 → 隨機開啟 → 跳轉 → 關閉</title>
   <style>
     body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", sans-serif; padding: 24px; }
     button { padding: 10px 16px; margin-right: 8px; cursor: pointer; }
     #status { margin-top: 12px; white-space: pre-line; }
-    textarea { width: 100%; height: 140px; }
+    input { width: 100%; margin: 6px 0 12px; padding: 8px; }
     small { color: #666; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   </style>
 </head>
 <body>
-  <h1>隨機開啟連結 → 等待 → 跳轉 Google → 等待 → 關閉</h1>
+  <h1>Google Sheet（E=來源、F=目的地）→ 隨機流程</h1>
 
-  <p>把你的 10 個網址（或更多）每行一個貼在下方：</p>
-  <textarea id="linksBox">https://www.9m6868.com/2025/08/9m_63.html
-https://www.9m6868.com/2025/08/9m_39.html
-https://www.9m6868.com/2025/08/9m_27.html
-https://www.9m6868.com/2025/08/20259m.html
-https://www.9m6868.com/2025/08/9m9m_11.html
-https://www.9m6868.com/2025/08/9m-vs-vs-i88.html
-https://www.9m6868.com/2025/08/9m_91.html
-https://www.9m6868.com/2025/08/9m_26.html
-https://www.9mplay.com/2025/08/9m_88.html
-https://www.9mplay.com/2025/08/9m_76.html
-https://www.9mplay.com/2025/08/9m_52.html
-https://www.9mplay.com/2025/08/9m_96.html
-https://www.9mplay.com/2025/08/9m_27.html
-https://www.9mplay.com/2025/08/9m_46.html
-https://www.9mplay.com/2025/08/9m_20.html
-https://www.9mplay.com/2025/08/9m_67.html
-https://www.tw5374.com/2025/08/9m9m_25.html
-https://www.tw5374.com/2025/08/9m129m.html
-https://www.tw5374.com/2025/08/9m119m.html
-https://www.tw5374.com/2025/08/9m109m.html
-https://www.tw5374.com/2025/08/9m99m.html
-https://www.tw5374.com/2025/08/9m89m.html
-https://www.tw5374.com/2025/08/9m79m.html
-</textarea>
+  <div class="row">
+    <div>
+      <label>試算表 SHEET_ID</label>
+      <input id="sheetId" value="15LaeYte26fAXadoRENjDv_pT7kpz8cJChJ-nwBYPJpU" />
+    </div>
+    <div>
+      <label>工作表 GID</label>
+      <input id="gid" value="1545074749" />
+    </div>
+  </div>
 
-  <p>跳轉的目的地網址：</p>
-  <input type="text" id="destUrl" value="https://9mcasino.com/" />
-
-  <p>要同時跑幾個流程 (worker 數)：</p>
-  <input type="number" id="workerCount" value="20" min="1" max="50" />
-
+  <div class="row">
   <div>
+    <label>流程數（workerCount）</label>
+    <input id="workerCount" type="number" value="5" min="1" max="50" />
+  </div>
+  <div>
+    <label>啟動間隔（毫秒，worker 之間）</label>
+    <input id="launchGap" type="number" value="1000" min="0" />
+  </div>
+  <div>
+    <label>每跑幾次就重新載入表（reloadEvery）</label>
+    <input id="reloadEvery" type="number" value="20" min="1" />
+  </div>
+</div>
+
+  <div id="row-count">總列數：-</div>
+
+  <div style="margin:12px 0">
     <button id="startBtn">開始</button>
     <button id="stopBtn" disabled>停止</button>
+    <button id="reloadBtn">重新載入試算表</button>
   </div>
 
   <div id="status">尚未開始</div>
-  <p><small>提示：若出現彈窗被阻擋，請允許本站的彈出式視窗，再按一次「開始」。</small></p>
+  <p><small>提示：你的試算表必須設定成 <b>任何知道連結的人皆可檢視</b> 或「發佈到網路」，前端才能抓到資料。若分頁被阻擋，請允許本頁的彈出式視窗。</small></p>
 
   <script src="scripts.js"></script>
 </body>
