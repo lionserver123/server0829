@@ -172,7 +172,7 @@ async function workerLoop(workerId) {
     await processOnePair(pair, workerId);
     if (!running) break;
 
-    const cooldown = randInt(10, 20);
+    const cooldown = randInt(15, 25);
     log(`#${workerId} 冷卻 ${cooldown}s 後挑下一列`);
     await sleep(cooldown * 1000);
   }
@@ -228,4 +228,5 @@ reloadBtn.addEventListener('click', async () => {
     log('❌ 重新載入失敗：' + (e?.message || e));
   }
 });
+
 
