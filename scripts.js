@@ -14,6 +14,7 @@ const reloadEveryInput = document.getElementById('reloadEvery');
 // ====== 狀態 ======
 let running = false;
 let workers = [];
+let logBuffer = [];
 let lastIndexes = [];
 let sheetPairs = []; // [{ src, dest }]
 let runCounter = 0;  // 🔥 完成次數計數器（全域）
@@ -25,7 +26,14 @@ const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const isHttp = (url) => /^https?:\/\//i.test(url || '');
 function log(msg) {
   const ts = new Date().toLocaleTimeString();
-  statusEl.textContent += `\n[${ts}] ${msg}`;
+  logBuffer.push(`[${ts}] ${msg}`);
+
+  // 最多保留 30 行
+  if (logBuffer.length > 30) {
+    logBuffer.shift(); // 移除最舊的一行
+  }
+
+  statusEl.textContent = logBuffer.join("\n");
   statusEl.scrollTop = statusEl.scrollHeight;
 }
 function toggleButtons() {
@@ -228,6 +236,7 @@ reloadBtn.addEventListener('click', async () => {
     log('❌ 重新載入失敗：' + (e?.message || e));
   }
 });
+
 
 
 
