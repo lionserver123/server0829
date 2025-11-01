@@ -29,7 +29,7 @@ function log(msg) {
   logBuffer.push(`[${ts}] ${msg}`);
 
   // 最多保留 20 行
-  if (logBuffer.length > 20) {
+  if (logBuffer.length > 15) {
     logBuffer.shift(); // 移除最舊的一行
   }
 
@@ -236,6 +236,7 @@ reloadBtn.addEventListener('click', async () => {
     log('❌ 重新載入失敗：' + (e?.message || e));
   }
 });
+
 
 
 
