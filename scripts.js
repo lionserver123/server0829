@@ -29,7 +29,7 @@ function log(msg) {
   logBuffer.push(`[${ts}] ${msg}`);
 
   // 最多保留 20 行
-  if (logBuffer.length > 15) {
+  if (logBuffer.length > 14) {
     logBuffer.shift(); // 移除最舊的一行
   }
 
@@ -139,14 +139,14 @@ async function processOnePair(pair, workerId) {
   // 來源
   try { win.location.href = src; } catch {}
 
-  const wait1 = randInt(40, 60);
+  const wait1 = randInt(35, 55);
   log(`#${workerId} 等待 ${wait1}s 後跳轉到目的地`);
   await sleep(wait1 * 1000);
 
   if (!running || win.closed) return;
   try { win.location.href = destUrl; } catch {}
 
-  const wait2 = randInt(60, 100);
+  const wait2 = randInt(55, 85);
   log(`#${workerId} 已跳轉，等待 ${wait2}s 後關閉`);
   await sleep(wait2 * 1000);
 
@@ -236,6 +236,7 @@ reloadBtn.addEventListener('click', async () => {
     log('❌ 重新載入失敗：' + (e?.message || e));
   }
 });
+
 
 
 
