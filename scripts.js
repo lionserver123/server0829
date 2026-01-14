@@ -139,14 +139,14 @@ async function processOnePair(pair, workerId) {
   // 來源
   try { win.location.href = src; } catch {}
 
-  const wait1 = randInt(60, 85);
+  const wait1 = randInt(65, 90);
   log(`#${workerId} 等待 ${wait1}s 後跳轉到目的地`);
   await sleep(wait1 * 1000);
 
   if (!running || win.closed) return;
   try { win.location.href = destUrl; } catch {}
 
-  const wait2 = randInt(70, 120);
+  const wait2 = randInt(75, 130);
   log(`#${workerId} 已跳轉，等待 ${wait2}s 後關閉`);
   await sleep(wait2 * 1000);
 
@@ -180,7 +180,7 @@ async function workerLoop(workerId) {
     await processOnePair(pair, workerId);
     if (!running) break;
 
-    const cooldown = randInt(50, 60);
+    const cooldown = randInt(60, 80);
     log(`#${workerId} 冷卻 ${cooldown}s 後挑下一列`);
     await sleep(cooldown * 1000);
   }
@@ -236,6 +236,7 @@ reloadBtn.addEventListener('click', async () => {
     log('❌ 重新載入失敗：' + (e?.message || e));
   }
 });
+
 
 
 
